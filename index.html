@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Video Chat</title>
+  <style>
+    /* Add your CSS styles here */
+    #localVideo, #remoteVideo {
+      width: 50%;
+      max-width: 320px;
+      height: auto;
+    }
+
+    #videos {
+      display: flex;
+      justify-content: space-between;
+    }
+  </style>
+</head>
+<body>
+  <div id="videos">
+    <video id="localVideo" autoplay muted></video>
+    <video id="remoteVideo" autoplay></video>
+  </div>
+
+  <script>
+    // JavaScript for setting up a simple video chat
+
+    const localVideo = document.getElementById('localVideo');
+    const remoteVideo = document.getElementById('remoteVideo');
+
+    // Create a connection to your signaling server.
+    // In a real application, you'd need a signaling server to exchange SDP offers and answers.
+    const peerConnection = new RTCPeerConnection();
+
+    // Get the user's webcam stream and display it on the local video element
+    navigator.mediaDevices.getUserMedia({ video: true, audio: true })
+      .then(stream => {
+        localVideo.srcObject = stream;
+        stream.getTracks().forEach(track => peerConnection.addTrack(track, stream));
+      })
+      .catch(error => console.error('Error accessing webcam: ', error));
+
+    // Handle the incoming stream from the other user
+    peerConnection.ontrack = event => {
+      const remoteStream = event.streams[0];
+      remoteVideo.srcObject = remoteStream;
+    };
+
+    // In a real application, you'd need to handle SDP offers and answers and set up ICE candidates for connectivity.
+
+    // In this simplified example, assume the other user's SDP offer and ICE candidates are received through some other mechanism.
+
+    // Create an SDP offer and send it to the other user
+    peerConnection.createOffer()
+      .then(offer => peerConnection.setLocalDescription(offer))
+      .then(() => {
+        // Send the offer to the other user, typically via a signaling server
+        // In a real application, you'd also receive the other user's SDP answer.
+        // Set the remote description with the received answer.
+      })
+      .catch(error => console.error('Error creating offer: ', error));
+
+    // Handle incoming ICE candidates
+    // In a real application, ICE candidates would be exchanged through a signaling server.
+    // For this simplified example, assume the other user's ICE candidates are received through some other mechanism.
+    // You'd also need to add these candidates to the remote peer connection.
+  </script>
+</body>
+</html>

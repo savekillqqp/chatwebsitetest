@@ -1,0 +1,26 @@
+to start first open life server in vscode for home.html
+next open ngrok and type
+
+token for website is:
+ngrok config add-authtoken 2TaDwtS5aGnDLrARxBSA7x6KZha_3seuaBZ75QXV4RAimzmVt
+
+
+ngrok http --domain=fit-helped-cub.ngrok-free.app 5500
+website is gonna be  https://fit-helped-cub.ngrok-free.app/home.html
+
+or bit.ly link: bit.ly/savekillsharing
+
+or in directory cmd php -S localhost:5500
+and then again do the ngrok code
+
+for stable diffusion open another ngrok cmd and first type
+ngrok config add-authtoken 2VffJ28YRdZ4ZKI0SMftOZ5yVKJ_7iUH6VUVCMnyemybRMrJy
+
+then type 
+ngrok http --domain=living-widely-beagle.ngrok-free.app 7860
+
+
+
+
+
+C:\Tools\Gradle\gradle-8.4\bin

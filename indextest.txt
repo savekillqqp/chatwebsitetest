@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Webcam Lightbox</title>
+  <style>
+    /* Add your CSS styles here */
+    #lightbox {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      justify-content: center;
+      align-items: center;
+    }
+
+    #video {
+      width: 80%;
+      max-width: 640px;
+      height: auto;
+    }
+  </style>
+</head>
+<body>
+  <button onclick="startWebcam()">Start</button>
+
+  <div id="lightbox">
+    <video id="video" autoplay></video>
+    <button onclick="stopWebcam()">Stop</button>
+  </div>
+
+  <script>
+    // JavaScript to access the webcam and display the video feed
+    let videoStream = null;
+    const videoElement = document.getElementById('video');
+    const lightbox = document.getElementById('lightbox');
+
+    async function startWebcam() {
+      try {
+        videoStream = await navigator.mediaDevices.getUserMedia({ video: true });
+        videoElement.srcObject = videoStream;
+        lightbox.style.display = 'flex';
+      } catch (error) {
+        console.error('Error accessing webcam: ', error);
+      }
+    }
+
+    function stopWebcam() {
+      if (videoStream) {
+        const tracks = videoStream.getTracks();
+        tracks.forEach(track => track.stop());
+        videoElement.srcObject = null;
+        lightbox.style.display = 'none';
+      }
+    }
+  </script>
+</body>
+</html>
